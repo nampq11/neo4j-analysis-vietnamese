@@ -179,12 +179,14 @@ CREATE (a2:Article {
 })
 
 // Create full-text index with Vietnamese analyzer
-CREATE FULLTEXT INDEX articleIndex 
-FOR (n:Article) 
+CREATE FULLTEXT INDEX articleIndex
+FOR (n:Article)
 ON EACH [n.title, n.content]
 OPTIONS {
-  analyzer: 'vietnamese'
-}
+  indexConfig: {
+    `fulltext.analyzer`: 'vietnamese'
+  }
+};
 
 // Search using the full-text index
 CALL db.index.fulltext.queryNodes('articleIndex', 'công nghệ')
